@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated track -->
+      <package
+            uri="http://jkk.sze.hu/auto/track"
+            class="hu.sze.jkk.auto.track.model.track.TrackPackage"
+            genModel="model/track.genmodel"/>
+   </extension>
+
+</plugin>
