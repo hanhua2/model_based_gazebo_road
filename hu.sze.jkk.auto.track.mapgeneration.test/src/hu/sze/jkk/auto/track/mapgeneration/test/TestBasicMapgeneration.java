@@ -12,7 +12,7 @@ import hu.sze.jkk.auto.track.mapgeneration.TrajectoryRead;
 
 class TestBasicMapgeneration {
 	private static final int RECORD_CNT = 1942;
-	private static final int REJECTION_RATE = 25;
+	private static final int REJECTION_RATE = 100;
 
 	@Test
 	void testBasicRead() {
@@ -34,6 +34,7 @@ class TestBasicMapgeneration {
 		try
 		{
 			tr.readTrajectoryFromCSV("./Shell-eco-2018-xy-940m.csv");
+			tr.constructRoadTrajectory("road_world", 6);
 			assertEquals((RECORD_CNT/REJECTION_RATE) + 1, tr.cvCount());
 			tr.WriteXML(System.out);
 		}catch(IOException io) {

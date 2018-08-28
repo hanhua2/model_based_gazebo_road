@@ -28,6 +28,7 @@ import org.apache.commons.csv.CSVRecord;
 public class TrajectoryRead {
 	final List<ControlVertex> cvs;
 	
+	private String world_name = "default";
 	private double road_width = 0.0;
 	private String road_name = ""; 
 	
@@ -50,25 +51,38 @@ public class TrajectoryRead {
         
         
         // start SDF        
-        //StartDocument startDocument = eventFactory.createStartDocument();
-        //eventWriter.add(startDocument);
-        
+        StartDocument startDocument = eventFactory.createStartDocument();
+        eventWriter.add(startDocument);
+        eventWriter.add(endline);
         StartElement configStartElement = eventFactory.createStartElement("", "", "sdf");
         eventWriter.add(configStartElement);
         eventWriter.add(eventFactory.createAttribute("version", "1.4"));
         eventWriter.add(endline);
+        // Setup world
         StartElement worldElement = eventFactory.createStartElement("", "", "world");
         eventWriter.add(tabline);
         eventWriter.add(worldElement);
-        eventWriter.add(eventFactory.createAttribute("name", road_name));
+        eventWriter.add(eventFactory.createAttribute("name", world_name));
         eventWriter.add(endline);
+        // Include basic SDF stuff
+        eventWriter.add(tabline);
+        eventWriter.add(eventFactory.createStartElement("", "", "include"));
+        eventWriter.add(endline);
+        eventWriter.add(tabline);
+        createNode(eventWriter, "uri", "model://sun");
+        eventWriter.add(eventFactory.createEndElement("", "", "include"));
+        eventWriter.add(tabline);
+        eventWriter.add(endline);
+        appendGroundPlane(eventWriter);
         // Nodes
         // Create a control point
         StartElement roadStartElement = eventFactory.createStartElement("","", "road");
         eventWriter.add(tabline);
         eventWriter.add(roadStartElement);
         eventWriter.add(eventFactory.createAttribute("name", road_name));
-        eventWriter.add(endline);        
+        eventWriter.add(endline);
+        eventWriter.add(tabline);
+        createNode(eventWriter, "width", Double.toString(road_width));
         for (ControlVertex cv: cvs)
         {
         	StringBuilder sb = new StringBuilder();
@@ -92,10 +106,10 @@ public class TrajectoryRead {
 		WriteXML(new FileOutputStream(path));
 	}
 	
-	private void createNode(XMLEventWriter eventWriter, String name,
+	private static void createNode(XMLEventWriter eventWriter, String name,
             String value) throws XMLStreamException {
 
-        XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+        //XMLEventFactory eventFactory = XMLEventFactory.newInstance();
         
         // create Start node
         StartElement sElement = eventFactory.createStartElement("", "", name);
@@ -115,10 +129,55 @@ public class TrajectoryRead {
 		return rejectionrate;
 	}
 	
-	public void constructRoadTrajectory(String name, double width){
+	public static void appendGroundPlane(XMLEventWriter eventWriter) throws XMLStreamException {
+		eventWriter.add(tabline);
+        eventWriter.add(eventFactory.createStartElement("", "", "model"));
+        eventWriter.add(eventFactory.createAttribute("name", "ground"));
+        eventWriter.add(endline);        
+        eventWriter.add(tabline);
+        eventWriter.add(eventFactory.createStartElement("", "", "link"));
+        eventWriter.add(eventFactory.createAttribute("name", "body"));
+        eventWriter.add(endline);
+        eventWriter.add(tabline);
+        eventWriter.add(eventFactory.createStartElement("", "", "collision"));        
+        eventWriter.add(eventFactory.createAttribute("name", "geom"));
+        eventWriter.add(endline);
+        eventWriter.add(tabline);
+        eventWriter.add(eventFactory.createStartElement("", "", "geometry"));
+        eventWriter.add(endline);
+        eventWriter.add(tabline);
+        eventWriter.add(eventFactory.createStartElement("", "", "plane"));
+        eventWriter.add(endline);
+        eventWriter.add(tabline);
+        createNode(eventWriter, "normal", "0 0 1");
+        eventWriter.add(eventFactory.createEndElement("", "", "plane"));
+        eventWriter.add(endline);
+        eventWriter.add(tabline);
+        eventWriter.add(eventFactory.createEndElement("", "", "geometry"));
+        eventWriter.add(eventFactory.createEndElement("", "", "collision"));
+        eventWriter.add(endline);
+        eventWriter.add(tabline);
+        eventWriter.add(eventFactory.createEndElement("", "", "link"));
+        eventWriter.add(endline);
+        eventWriter.add(tabline);
+        createNode(eventWriter, "static", "true");
+        eventWriter.add(eventFactory.createEndElement("", "", "model"));
+        eventWriter.add(tabline);
+        eventWriter.add(endline);
+	}
+	
+	public void constructRoadTrajectory(String name, double width, boolean close){
 		if (cvs.size()!=0){
-						
+			this.road_name = name;
+			this.road_width = width;
+			if (close) {
+				cvs.add(cvs.get(0));
+			}
 		}
+	}
+	
+	public void constructRoadTrajectory(String name, double width){
+		constructRoadTrajectory(name, width, false);
 	}
 	
 	public void readTrajectoryFromCSV(String path) throws IOException {
@@ -132,7 +191,8 @@ public class TrajectoryRead {
 					cvs.add(new ControlVertex(
 							Double.parseDouble(record.get(0)),
 							Double.parseDouble(record.get(1)),
-							Double.parseDouble(record.get(2))
+							0.0
+							//Double.parseDouble(record.get(2))
 					));
 					i = 0;
 				}
