@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="track" nsURI="http://jkk.sze.hu/auto/track" nsPrefix="track">
-  <eClassifiers xsi:type="ecore:EClass" name="Track">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="trajectory" upperBound="-1"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="track" nsURI="http://kyberszittya.hu/auto/track" nsPrefix="track">
+  <eClassifiers xsi:type="ecore:EClass" name="VehicleEnvironment">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="environmentobject" upperBound="-1"
+        eType="#//EnvironmentObject" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="graphedge" upperBound="-1"
+        eType="#//SegmentEdge" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Segment"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EnvironmentObject" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Track" eSuperTypes="#//EnvironmentObject">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="segment" upperBound="-1"
         eType="#//Segment" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Trajectory">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="controlpoints" upperBound="-1"
-        eType="#//Vector3" containment="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Obstacle" eSuperTypes="#//EnvironmentObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SegmentEdge" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="obstacle" eType="#//Obstacle"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="segment" eType="#//Segment"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Vector3">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="z" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Segment">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="trajectory" lowerBound="1"
-        eType="#//Trajectory" containment="true"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Nearby" eSuperTypes="#//SegmentEdge"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlacedOn" eSuperTypes="#//SegmentEdge"/>
 </ecore:EPackage>

@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel"
-    modelDirectory="/hu.sze.jkk.auto.track.model/src-gen" creationIcons="false"
+    modelDirectory="/hu.kyberszittya.auto.track.model/src-gen" creationIcons="false"
     editDirectory="/hu.sze.jkk.auto.track.model.edit/src-gen" editorDirectory="/hu.sze.jkk.auto.track.model.editor/src-gen"
-    modelPluginID="hu.sze.jkk.auto.track.model" modelName="Track" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    modelPluginID="hu.kyberszittya.auto.track.model" modelName="Track" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     codeFormatting="true" importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0"
     copyrightFields="false" operationReflection="true" importOrganizing="true">
   <foreignModel>track.ecore</foreignModel>
   <testsDirectory xsi:nil="true"/>
-  <genPackages prefix="Track" basePackage="hu.sze.jkk.auto.track.model" disposableProviderFactory="true"
+  <genPackages prefix="Track" basePackage="hu.kyberszittya.auto.track.model" disposableProviderFactory="true"
       ecorePackage="track.ecore#/">
+    <genClasses ecoreClass="track.ecore#//VehicleEnvironment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute track.ecore#//VehicleEnvironment/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference track.ecore#//VehicleEnvironment/environmentobject"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference track.ecore#//VehicleEnvironment/graphedge"/>
+    </genClasses>
+    <genClasses ecoreClass="track.ecore#//Segment"/>
+    <genClasses ecoreClass="track.ecore#//EnvironmentObject"/>
     <genClasses ecoreClass="track.ecore#//Track">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference track.ecore#//Track/trajectory"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference track.ecore#//Track/segment"/>
     </genClasses>
-    <genClasses ecoreClass="track.ecore#//Trajectory">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference track.ecore#//Trajectory/controlpoints"/>
+    <genClasses ecoreClass="track.ecore#//Obstacle"/>
+    <genClasses ecoreClass="track.ecore#//SegmentEdge">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference track.ecore#//SegmentEdge/obstacle"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference track.ecore#//SegmentEdge/segment"/>
     </genClasses>
-    <genClasses ecoreClass="track.ecore#//Vector3">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute track.ecore#//Vector3/x"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute track.ecore#//Vector3/y"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute track.ecore#//Vector3/z"/>
-    </genClasses>
-    <genClasses ecoreClass="track.ecore#//Segment">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference track.ecore#//Segment/trajectory"/>
-    </genClasses>
+    <genClasses ecoreClass="track.ecore#//Nearby"/>
+    <genClasses ecoreClass="track.ecore#//PlacedOn"/>
   </genPackages>
 </genmodel:GenModel>
