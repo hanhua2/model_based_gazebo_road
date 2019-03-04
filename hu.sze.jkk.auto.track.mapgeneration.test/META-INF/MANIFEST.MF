@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test
+Bundle-SymbolicName: hu.sze.jkk.auto.track.mapgeneration.test
+Bundle-Version: 1.0.0.qualifier
+Export-Package: hu.sze.jkk.auto.track.mapgeneration.test
