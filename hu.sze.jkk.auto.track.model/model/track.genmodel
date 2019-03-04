@@ -11,21 +11,42 @@
   <genPackages prefix="Track" basePackage="hu.kyberszittya.auto.track.model" disposableProviderFactory="true"
       ecorePackage="track.ecore#/">
     <genClasses ecoreClass="track.ecore#//VehicleEnvironment">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute track.ecore#//VehicleEnvironment/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference track.ecore#//VehicleEnvironment/environmentobject"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference track.ecore#//VehicleEnvironment/graphedge"/>
     </genClasses>
-    <genClasses ecoreClass="track.ecore#//Segment"/>
+    <genClasses ecoreClass="track.ecore#//Segment">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference track.ecore#//Segment/pose"/>
+    </genClasses>
     <genClasses ecoreClass="track.ecore#//EnvironmentObject"/>
     <genClasses ecoreClass="track.ecore#//Track">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference track.ecore#//Track/segment"/>
     </genClasses>
     <genClasses ecoreClass="track.ecore#//Obstacle"/>
     <genClasses ecoreClass="track.ecore#//SegmentEdge">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference track.ecore#//SegmentEdge/obstacle"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference track.ecore#//SegmentEdge/segment"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference track.ecore#//SegmentEdge/from"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference track.ecore#//SegmentEdge/to"/>
     </genClasses>
     <genClasses ecoreClass="track.ecore#//Nearby"/>
     <genClasses ecoreClass="track.ecore#//PlacedOn"/>
+    <genClasses ecoreClass="track.ecore#//ExactTransformation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference track.ecore#//ExactTransformation/pose"/>
+    </genClasses>
+    <genClasses ecoreClass="track.ecore#//Pose">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference track.ecore#//Pose/position"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference track.ecore#//Pose/orientation"/>
+    </genClasses>
+    <genClasses ecoreClass="track.ecore#//Position">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute track.ecore#//Position/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute track.ecore#//Position/y"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute track.ecore#//Position/z"/>
+    </genClasses>
+    <genClasses ecoreClass="track.ecore#//Orientation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute track.ecore#//Orientation/roll"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute track.ecore#//Orientation/pitch"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute track.ecore#//Orientation/yaw"/>
+    </genClasses>
+    <genClasses ecoreClass="track.ecore#//NamedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute track.ecore#//NamedElement/name"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>
